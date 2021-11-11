@@ -1,0 +1,7 @@
+const { resolve } = resolve('path');
+
+module.exports = {
+  config: resolve(__dirname, '..', 'src', 'Configs', 'db.js'),
+  'models-path': resolve(__dirname, 'src', 'Apps', 'Models'),
+  'migrations-path': resolve(__dirname, 'src', 'Database', 'Migrations'),
+};
