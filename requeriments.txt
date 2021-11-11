@@ -54,3 +54,7 @@ Edit-profile [{
     gender
 }]
 
+Upload[{
+  image
+}]
+
