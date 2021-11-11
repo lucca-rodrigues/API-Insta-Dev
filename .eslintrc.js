@@ -12,5 +12,6 @@ module.exports = {
     'no-param-reasign': 'off',
     camelCase: 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+    'max-len': ['error', { code: 80 }],
   },
 };
