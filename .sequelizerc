@@ -1,4 +1,4 @@
-const { resolve } = resolve('path');
+const { resolve } = require('path');
 
 module.exports = {
   config: resolve(__dirname, '..', 'src', 'Configs', 'db.js'),
