@@ -1,15 +1,12 @@
-const Sequelize = require('sequelize');
+const { connection } = require('../Configs/db');
 
-const databaseConfig = require('../Configs/db');
+const connectionDatabase = connection
+  .authenticate()
+  .then(() => {
+    console.log('Conectado ao banco!');
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-class Database {
-  constructor() {
-    this.init();
-  }
-
-  init() {
-    this.connection = new Sequelize(databaseConfig);
-  }
-}
-
-module.exports = new Database();
+module.exports = { connectionDatabase };
