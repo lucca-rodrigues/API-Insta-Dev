@@ -14,10 +14,11 @@ const util = require('util');
 class Logger {
   constructor(config) {
 
-    this.config = Object.assign({
+    this.config = {
       context: 'sequelize',
-      debug: true
-    }, config);
+      debug: true,
+      ...config
+    };
   }
 
   warn(message) {
@@ -26,7 +27,7 @@ class Logger {
   }
 
   inspect(value) {
-    return util.inspect(value, false, 3);
+    return util.inspect(value, false, 1);
   }
 
   debugContext(name) {

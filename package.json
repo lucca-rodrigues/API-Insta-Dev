@@ -18,12 +18,12 @@
   },
   "homepage": "https://github.com/lucca-rodrigues/API-Insta-Dev#readme",
   "devDependencies": {
-    "nodemon": "^2.0.15",
-    "sequelize-cli": "^5.5.1"
+    "nodemon": "^2.0.7",
+    "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
     "express": "^4.17.1",
     "pg": "^8.0.2",
-    "sequelize": "^5.19.6"
+    "sequelize": "^6.6.5"
   }
 }
