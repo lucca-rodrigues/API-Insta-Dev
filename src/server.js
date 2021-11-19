@@ -1,18 +1,13 @@
-require('dotenv').config();
-require('./Database');
-
-const PORT = process.env.PORT || 3000;
-
-const express = require('express');
-
-const routes = require('./routes');
+const express = require("express");
 
 const app = express();
+
+require("./App/Database");
+
+const routes = require("./routes");
 
 app.use(express.json());
 
 app.use(routes);
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+app.listen(3333);
