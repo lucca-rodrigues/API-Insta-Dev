@@ -10,9 +10,14 @@ class UserDetailsController {
       ...data,
     };
 
-    const details = await UserDetails.create(userDetails);
-
-    return res.json(details);
+    const details = await UserDetails.create(userDetails)
+      .then(() => {
+        return res.json(details);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).json({ error: err?.errors[0].message });
+      });
   }
 
   async getDetails(req, res) {
