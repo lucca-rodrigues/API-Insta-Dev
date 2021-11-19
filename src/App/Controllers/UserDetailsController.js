@@ -1,18 +1,41 @@
 const UserDetails = require("../Models/UserDetails");
+const User = require("../Models/User");
+const validateIfFieldsNotEmpty = require("../../Utils/validateNotEmptyFields");
 
 class UserDetailsController {
   async create(req, res) {
-    const data = req.body;
-    const id = req.params.id;
+    const { username, avatar, bio, gender } = req.body;
+    const id = req?.params?.id;
 
     const userDetails = {
       user_id: id,
-      ...data,
+      username,
+      avatar,
+      bio,
+      gender,
     };
 
-    const details = await UserDetails.create(userDetails)
+    if (validateIfFieldsNotEmpty(userDetails)) {
+      const details = await UserDetails.create(userDetails)
+        .then(() => {
+          return res.status(200).json(details);
+        })
+        .catch((err) => {
+          return res.status(400).json({
+            error: err?.errors[0].message ? err?.errors[0].message : err,
+          });
+        });
+    } else {
+      return res.status(400).json({
+        error: "Error to create details, set all field values required",
+      });
+    }
+  }
+
+  async getDetails(req, res) {
+    const details = await UserDetails.findAll()
       .then(() => {
-        return res.json(details);
+        return res.status(200).json(details);
       })
       .catch((err) => {
         console.log(err);
@@ -20,20 +43,19 @@ class UserDetailsController {
       });
   }
 
-  async getDetails(req, res) {
-    const details = await UserDetails.findAll();
-
-    return res.status(200).json(details);
-  }
-
   async getDetailsById(req, res) {
     const details = await UserDetails.findOne({
       where: {
         user_id: req.params.id,
       },
-    });
-
-    return res.status(200).json(details);
+    })
+      .then(() => {
+        return res.status(200).json(details);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(404).json({ error: "user not aready exists!" });
+      });
   }
 }
 
