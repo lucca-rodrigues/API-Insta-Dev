@@ -17,7 +17,6 @@ class UserDetailsController {
 
   async getDetails(req, res) {
     const userId = req.params.id;
-    const details = await UserDetails.findAll();
 
     const details = await UserDetails.findOne({
       where: {

@@ -10,7 +10,7 @@ routes.get("/users", UserController.getAllUsers);
 routes.post("/users", UserController.store);
 
 // Details
-routes.get("/users/details", UserDetailsController.getDetails);
+routes.get("/users/details/:id", UserDetailsController.getDetails);
 routes.post("/users/details/:id", UserDetailsController.create);
 
 // routes.get("/users/:id", UserController.show);
