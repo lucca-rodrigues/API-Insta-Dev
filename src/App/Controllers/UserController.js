@@ -1,7 +1,7 @@
 const User = require("../Models/User");
 
 class UserController {
-  async store(req, res) {
+  async create(req, res) {
     const user = await User.create(req.body);
 
     return res.json(user);

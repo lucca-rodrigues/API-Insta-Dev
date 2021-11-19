@@ -7,10 +7,11 @@ const UserDetailsController = require("./App/Controllers/UserDetailsController")
 
 // Create user
 routes.get("/users", UserController.getAllUsers);
-routes.post("/users", UserController.store);
+routes.post("/users", UserController.create);
 
 // Details
-routes.get("/users/details/:id", UserDetailsController.getDetails);
+routes.get("/users/details", UserDetailsController.getDetails);
+routes.get("/users/details/:id", UserDetailsController.getDetailsById);
 routes.post("/users/details/:id", UserDetailsController.create);
 
 routes.get("/", (req, res) => {

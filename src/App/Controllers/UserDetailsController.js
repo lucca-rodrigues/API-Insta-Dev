@@ -2,37 +2,33 @@ const UserDetails = require("../Models/UserDetails");
 
 class UserDetailsController {
   async create(req, res) {
-    const userId = req.params.id;
-    const userDetails = req.body;
+    const data = req.body;
+    const id = req.params.id;
 
-    const data = {
-      userId,
-      ...userDetails,
+    const userDetails = {
+      user_id: id,
+      ...data,
     };
 
-    const detail = await UserDetails.create(data)
-      .then(() => {
-        return res.status(200).json(detail);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const details = await UserDetails.create(userDetails);
+
+    return res.json(details);
   }
 
   async getDetails(req, res) {
-    const userId = req.params.id;
-    const details = await UserDetails.findAll()
-      .then(() => {
-        return res.status(200).json(details);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // const details = await UserDetails.findOne({
-    //   where: {
-    //     userId: userId,
-    //   },
-    // });
+    const details = await UserDetails.findAll();
+
+    return res.status(200).json(details);
+  }
+
+  async getDetailsById(req, res) {
+    const details = await UserDetails.findOne({
+      where: {
+        user_id: req.params.id,
+      },
+    });
+
+    return res.status(200).json(details);
   }
 }
 

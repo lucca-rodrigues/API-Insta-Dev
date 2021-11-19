@@ -3,9 +3,16 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("user_details", {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        unique: true,
       },
       username: {
         type: Sequelize.STRING,
@@ -22,10 +29,14 @@ module.exports = {
       gender: {
         type: Sequelize.STRING,
       },
-      // password_hash: {
-      //   type: Sequelize.STRING,
-      //   allowNull: false,
-      // },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
     });
   },
 
