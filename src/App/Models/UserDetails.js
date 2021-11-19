@@ -7,7 +7,7 @@ class UserDetails extends Model {
   static init(sequelize) {
     super.init(
       {
-        userId: Sequelize.INTEGER,
+        user_id: Sequelize.INTEGER,
         username: Sequelize.STRING,
         avatar: Sequelize.STRING,
         bio: Sequelize.STRING,
@@ -23,7 +23,7 @@ class UserDetails extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: "userId", as: "users" });
+    this.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
   }
 }
 

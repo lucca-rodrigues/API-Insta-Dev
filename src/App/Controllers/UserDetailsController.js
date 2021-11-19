@@ -10,21 +10,29 @@ class UserDetailsController {
       ...userDetails,
     };
 
-    const detail = await UserDetails.create(data);
-
-    return res.json(detail);
+    const detail = await UserDetails.create(data)
+      .then(() => {
+        return res.status(200).json(detail);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async getDetails(req, res) {
     const userId = req.params.id;
-
-    const details = await UserDetails.findOne({
-      where: {
-        userId: userId,
-      },
-    });
-
-    return res.status(200).json(details);
+    const details = await UserDetails.findAll()
+      .then(() => {
+        return res.status(200).json(details);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // const details = await UserDetails.findOne({
+    //   where: {
+    //     userId: userId,
+    //   },
+    // });
   }
 }
 

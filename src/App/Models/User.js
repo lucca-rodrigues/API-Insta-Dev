@@ -2,6 +2,7 @@
 
 const Sequelize = require("sequelize");
 const { Model } = require("sequelize");
+const bcryptjs = require("bcryptjs");
 
 class User extends Model {
   static init(sequelize) {
@@ -9,7 +10,8 @@ class User extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        password: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
       },
       {
         sequelize,
@@ -17,7 +19,17 @@ class User extends Model {
       }
     );
 
+    this.addHook("beforeSave", async (user) => {
+      if (user.password) {
+        user.password_hash = await bcryptjs.hash(user.password, 8);
+      }
+    });
+
     return this;
+  }
+
+  checkPassword(password) {
+    return bcryptjs.compare(password, this.password_hash);
   }
 }
 
