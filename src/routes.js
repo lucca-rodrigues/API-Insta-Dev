@@ -13,12 +13,6 @@ routes.post("/users", UserController.store);
 routes.get("/users/details/:id", UserDetailsController.getDetails);
 routes.post("/users/details/:id", UserDetailsController.create);
 
-// routes.get("/users/:id", UserController.show);
-
-// // User Details
-// routes.get("/users/details", UserController.show);
-// routes.put("/users/details/:id", UserController.update);
-
 routes.get("/", (req, res) => {
   res.json({ message: "hello world" });
 });
