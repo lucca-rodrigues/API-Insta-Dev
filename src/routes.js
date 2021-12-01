@@ -1,13 +1,15 @@
 const { Router } = require("express");
-
 const routes = new Router();
+
+const schemaValidator = require("./App/Middlewares/schemaValidator");
+const userSchema = require("./Schemas/CreateUserSchema");
 
 const UserController = require("./App/Controllers/UserController");
 const UserDetailsController = require("./App/Controllers/UserDetailsController");
 
 // Create user
 routes.get("/users", UserController.getAllUsers);
-routes.post("/users", UserController.create);
+routes.post("/users", schemaValidator(userSchema), UserController.create);
 
 // Details
 routes.get("/users/details", UserDetailsController.getDetails);
