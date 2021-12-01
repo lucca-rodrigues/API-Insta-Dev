@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { Op } = require("sequelize");
 const User = require("../Models/User");
 
 class AuthController {
@@ -22,13 +21,19 @@ class AuthController {
         where: userData,
       });
 
-      if (!user) res.status(400).send({ error: "User not found" });
+      if (!user) res.status(401).send({ error: "User not found" });
 
       if (!(await user.checkPassword(password))) {
         return res.status(401).send({ error: "Password does not match!" });
       }
 
-      return res.status(200).json({ user });
+      const { id, name: user_name } = user;
+
+      const token = jwt.sign({ id }, "dcee57ceb0b251443b2b1c74f9f64187", {
+        expiresIn: "1d",
+      });
+
+      return res.status(200).json({ user: { id, name: user_name }, token });
     } catch (error) {
       return res.status(401).json({ error: error.message });
     }
