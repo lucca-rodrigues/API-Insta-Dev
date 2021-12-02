@@ -20,7 +20,7 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
       },
-      number_likes: {
+      likes: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
