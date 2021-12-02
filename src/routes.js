@@ -10,6 +10,8 @@ const authSchema = require("./Schemas/AuthSchema");
 const UserController = require("./App/Controllers/UserController");
 const UserDetailsController = require("./App/Controllers/UserDetailsController");
 const AuthController = require("./App/Controllers/AuthController");
+const { upload } = require("./Config/Multer");
+const FileController = require("./App/Controllers/FileController");
 
 routes.get("/", (req, res) => {
   res.json({ message: "hello world" });
@@ -26,5 +28,7 @@ routes.delete("/users/:id", UserController.delete);
 
 routes.get("/users/details", UserDetailsController.getDetails);
 routes.post("/users/details", UserDetailsController.create);
+
+routes.post("/upload", upload.single("image"), FileController.upload);
 
 module.exports = routes;
