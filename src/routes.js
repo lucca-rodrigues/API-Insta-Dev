@@ -38,6 +38,7 @@ routes.get("/posts/user", PostController.getPostsByUser);
 routes.put("/posts/user", PostController.getPostsByUser);
 
 routes.post("/posts/like/:id", LikeController.addLike);
+routes.put("/posts/unlike/:id", LikeController.removeLike);
 
 routes.post("/upload", upload.single("image"), FileController.upload);
 
