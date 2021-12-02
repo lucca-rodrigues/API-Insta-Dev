@@ -21,9 +21,10 @@ routes.post("/auth", schemaValidator(authSchema), AuthController.authenticate);
 
 routes.use(authMiddleware);
 routes.get("/users", UserController.getAllUsers);
+routes.delete("/users/:id", UserController.delete);
 
-routes.get("/users/details", UserDetailsController.getDetails);
-routes.get("/users/details/:id", UserDetailsController.getDetailsById);
-routes.post("/users/details/:id", UserDetailsController.create);
+// routes.get("/users/details", UserDetailsController.getDetails);
+// routes.get("/users/details/:id", UserDetailsController.getDetailsById);
+// routes.post("/users/details/:id", UserDetailsController.create);
 
 module.exports = routes;
