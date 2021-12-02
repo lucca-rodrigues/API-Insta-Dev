@@ -1,4 +1,5 @@
 const User = require("../Models/User");
+const UserDetails = require("../Models/UserDetails");
 
 class UserController {
   async create(req, res) {
@@ -17,17 +18,28 @@ class UserController {
   }
 
   async getAllUsers(req, res) {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      order: [["created_at", "DESC"]],
+      attributes: ["id", "name", "email", "created_at", "updated_at"],
+    });
 
     return res.status(200).json(users);
   }
 
   async getUser(req, res) {
-    const user = await User.findOne({
-      attributes: ["id", "name", "email", "createdAt", "updatedAt"],
+    const user = await User.findAll({
       where: {
         id: req.user_id,
       },
+      attributes: ["id", "name", "email", "createdAt"],
+      include: [
+        {
+          model: UserDetails,
+          as: "user_details",
+          required: true,
+          attributes: ["username", "avatar", "bio", "gender"],
+        },
+      ],
     });
 
     if (!user) {

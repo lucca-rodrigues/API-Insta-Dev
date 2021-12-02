@@ -35,6 +35,20 @@ class UserDetailsController {
     }
     return res.status(200).json(user);
   }
+
+  async update(req, res) {
+    const { username, avatar, bio, gender } = req.body;
+    const userBio = await UserDetails.update(
+      { username, avatar, bio, gender },
+      { where: { user_id: req.user_id } }
+    );
+
+    if (!userBio) {
+      return res.status(400).json({ message: "Error to update bio" });
+    }
+
+    return res.status(200).json({ bio: { username, avatar, bio, gender } });
+  }
 }
 
 module.exports = new UserDetailsController();

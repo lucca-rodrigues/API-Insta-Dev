@@ -27,11 +27,13 @@ routes.get("/users", UserController.getAllUsers);
 routes.get("/users/properties", UserController.getUser);
 routes.delete("/users/:id", UserController.delete);
 
-routes.get("/users/details", UserDetailsController.getDetails);
-routes.post("/users/details", UserDetailsController.create);
+routes.get("/users/bio", UserDetailsController.getDetails);
+routes.post("/users/bio", UserDetailsController.create);
+routes.put("/users/bio", UserDetailsController.update);
 
 routes.post("/posts/new", PostController.create);
 routes.get("/posts/user", PostController.getPostsByUser);
+routes.put("/posts/user", PostController.getPostsByUser);
 
 routes.post("/upload", upload.single("image"), FileController.upload);
 
