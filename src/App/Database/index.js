@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const User = require("../Models/User");
 const UserDetails = require("../Models/UserDetails");
 const Post = require("../Models/Post");
+// const Like = require("../Models/Like");
 
 const databaseConfig = require("../../Config/database");
 

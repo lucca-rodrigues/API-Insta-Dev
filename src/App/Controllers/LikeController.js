@@ -3,6 +3,7 @@ const Post = require("../Models/Post");
 class LikeController {
   async addLike(req, res) {
     const postId = req.params.id;
+    const userId = req.user_id;
 
     const verifyPost = await Post.findOne({
       where: { id: postId },
@@ -12,21 +13,22 @@ class LikeController {
       return res.status(400).json({ error: "Post not found" });
     }
 
-    if (verifyPost.likes < 1) {
-      const postLike = await Post.update(
-        { likes: verifyPost.likes + 1 },
-        {
-          where: { id: postId },
-        }
-      );
-
-      if (!postLike) {
-        return res.status(400).json({ error: "Error to add like" });
+    const postLike = await Post.update(
+      { likes: verifyPost.likes + 1 },
+      {
+        where: { id: postId },
       }
+    );
 
-      return res.json({ message: "Success, post liked" });
+    if (!postLike) {
+      return res.status(400).json({ error: "Error to add like" });
     }
-    return res.status(401).json({ message: "Post is liked for you" });
+
+    if (!verifyPost.likes > 1) {
+      return res.status(401).json({ message: "Post is liked for you" });
+    }
+
+    return res.json({ message: "Success, post liked" });
   }
   async removeLike(req, res) {
     const postId = req.params.id;

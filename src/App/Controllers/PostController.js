@@ -19,14 +19,7 @@ class PostController {
   async getPosts(req, res) {
     const posts = await Post.findAll({
       order: [["created_at", "DESC"]],
-      attributes: [
-        "id",
-        "author_id",
-        "description",
-        "image",
-        "created_at",
-        "likes",
-      ],
+      attributes: ["id", "author_id", "description", "image", "created_at"],
       include: [
         {
           model: User,

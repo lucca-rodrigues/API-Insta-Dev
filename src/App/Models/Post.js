@@ -8,7 +8,6 @@ class UserDetails extends Model {
         author_id: Sequelize.INTEGER,
         image: Sequelize.STRING,
         description: Sequelize.STRING,
-        likes: Sequelize.INTEGER,
       },
       {
         sequelize,
