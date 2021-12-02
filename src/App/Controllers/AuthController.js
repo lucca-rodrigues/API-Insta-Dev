@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../Models/User");
+const { encrypt } = require("../../Utils/crypt");
 
 class AuthController {
   async authenticate(req, res) {
@@ -29,8 +30,12 @@ class AuthController {
 
       const { id, name: user_name } = user;
 
-      const token = jwt.sign({ id }, "dcee57ceb0b251443b2b1c74f9f64187", {
-        expiresIn: "1d",
+      const { iv, content } = encrypt(id);
+
+      const newId = `${iv}:${content}`;
+
+      const token = jwt.sign({ user_id: newId }, process.env.HASH_BCRYPT, {
+        expiresIn: process.env.EXPIRE_IN,
       });
 
       return res.status(200).json({ user: { id, name: user_name }, token });
