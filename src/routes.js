@@ -13,6 +13,7 @@ const AuthController = require("./App/Controllers/AuthController");
 const { upload } = require("./Config/Multer");
 const FileController = require("./App/Controllers/FileController");
 const PostController = require("./App/Controllers/PostController");
+const LikeController = require("./App/Controllers/LikeController");
 
 routes.get("/", (req, res) => {
   res.json({ message: "hello world" });
@@ -35,6 +36,8 @@ routes.delete("/users/bio/:id", UserDetailsController.delete);
 routes.post("/posts/new", PostController.create);
 routes.get("/posts/user", PostController.getPostsByUser);
 routes.put("/posts/user", PostController.getPostsByUser);
+
+routes.post("/posts/like/:id", LikeController.addLike);
 
 routes.post("/upload", upload.single("image"), FileController.upload);
 
