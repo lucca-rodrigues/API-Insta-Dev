@@ -3,6 +3,7 @@ const routes = new Router();
 
 const schemaValidator = require("./App/Middlewares/schemaValidator");
 const userSchema = require("./Schemas/CreateUserSchema");
+const authSchema = require("./Schemas/AuthSchema");
 
 const UserController = require("./App/Controllers/UserController");
 const UserDetailsController = require("./App/Controllers/UserDetailsController");
@@ -12,7 +13,7 @@ const AuthController = require("./App/Controllers/AuthController");
 routes.get("/users", UserController.getAllUsers);
 routes.post("/users", schemaValidator(userSchema), UserController.create);
 
-routes.post("/auth", AuthController.authenticate);
+routes.post("/auth", schemaValidator(authSchema), AuthController.authenticate);
 // Details
 routes.get("/users/details", UserDetailsController.getDetails);
 routes.get("/users/details/:id", UserDetailsController.getDetailsById);
