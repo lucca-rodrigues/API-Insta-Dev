@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const { Model } = require("sequelize");
 
-class UserDetails extends Model {
+class Like extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -20,12 +20,12 @@ class UserDetails extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Post, { foreignKey: "post_id", as: "posts" });
-    this.hasMany(models.User, {
-      foreignKey: "id",
-      as: "users",
-    });
+    // this.belongsTo(models.Post, { foreignKey: "post_id", as: "posts" });
+    // this.hasMany(models.User, {
+    //   foreignKey: "id",
+    //   as: "users",
+    // });
   }
 }
 
-module.exports = UserDetails;
+module.exports = Like;

@@ -30,12 +30,12 @@ class User extends Model {
     return bcryptjs.compare(password, this.password_hash);
   }
 
-  static associate(models) {
-    this.hasOne(models.UserDetails, {
-      foreignKey: "user_id",
-      as: "user_details",
-    });
-  }
+  // static associate(models) {
+  //   this.hasOne(models.UserDetails, {
+  //     foreignKey: "user_id",
+  //     as: "user_details",
+  //   });
+  // }
 }
 
 module.exports = User;
