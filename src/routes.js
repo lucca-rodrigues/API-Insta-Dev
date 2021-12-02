@@ -21,6 +21,7 @@ routes.post("/auth", schemaValidator(authSchema), AuthController.authenticate);
 
 routes.use(authMiddleware);
 routes.get("/users", UserController.getAllUsers);
+routes.get("/user", UserController.getUser);
 routes.delete("/users/:id", UserController.delete);
 
 // routes.get("/users/details", UserDetailsController.getDetails);

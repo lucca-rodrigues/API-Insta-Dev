@@ -22,6 +22,21 @@ class UserController {
     return res.status(200).json(users);
   }
 
+  async getUser(req, res) {
+    const user = await User.findOne({
+      attributes: ["id", "name", "email", "createdAt", "updatedAt"],
+      where: {
+        id: req.user_id,
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    return res.status(200).json(user);
+  }
+
   async delete(req, res) {
     const user = await User.findOne({
       where: {
