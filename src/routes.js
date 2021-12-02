@@ -30,6 +30,7 @@ routes.delete("/users/:id", UserController.delete);
 routes.get("/users/bio", UserDetailsController.getDetails);
 routes.post("/users/bio", UserDetailsController.create);
 routes.put("/users/bio", UserDetailsController.update);
+routes.delete("/users/bio/:id", UserDetailsController.delete);
 
 routes.post("/posts/new", PostController.create);
 routes.get("/posts/user", PostController.getPostsByUser);

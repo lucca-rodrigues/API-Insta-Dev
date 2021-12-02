@@ -1,12 +1,11 @@
 const bcryptjs = require("bcryptjs");
 const UserDetails = require("../Models/UserDetails");
-const User = require("../Models/User");
 
 class UserDetailsController {
   async create(req, res) {
     const { username, avatar, bio, gender } = req.body;
 
-    const detail = await UserDetails.create({
+    const detailDetails = await UserDetails.create({
       user_id: req.user_id,
       username,
       avatar,
@@ -14,13 +13,11 @@ class UserDetailsController {
       gender,
     });
 
-    if (!detail) {
+    if (!detailDetails) {
       return res.status(400).json({ message: "Create user details failed!" });
     }
 
-    return res
-      .status(200)
-      .json({ user_id: req.user_id, username, avatar, bio, gender });
+    return res.status(200).json(detailDetails);
   }
 
   async getDetails(req, res) {
@@ -48,6 +45,28 @@ class UserDetailsController {
     }
 
     return res.status(200).json({ bio: { username, avatar, bio, gender } });
+  }
+
+  async delete(req, res) {
+    const userId = req.user_id;
+    const bioId = req.params.id;
+
+    const user = await UserDetails.findOne({
+      where: {
+        user_id: userId,
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: "User Bio not found" });
+    }
+
+    await UserDetails.destroy({
+      where: {
+        id: bioId,
+      },
+    });
+    return res.status(200).json({ message: "User Bio deleted!" });
   }
 }
 
