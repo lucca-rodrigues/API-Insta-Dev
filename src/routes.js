@@ -30,8 +30,9 @@ routes.delete("/users/:id", UserController.delete);
 routes.get("/users/details", UserDetailsController.getDetails);
 routes.post("/users/details", UserDetailsController.create);
 
-routes.post("/upload", upload.single("image"), FileController.upload);
-
 routes.post("/posts/new", PostController.create);
+routes.get("/posts/user", PostController.getPostsByUser);
+
+routes.post("/upload", upload.single("image"), FileController.upload);
 
 module.exports = routes;
