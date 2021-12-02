@@ -26,6 +26,6 @@ routes.delete("/users/:id", UserController.delete);
 
 // routes.get("/users/details", UserDetailsController.getDetails);
 // routes.get("/users/details/:id", UserDetailsController.getDetailsById);
-// routes.post("/users/details/:id", UserDetailsController.create);
+routes.post("/users/details", UserDetailsController.create);
 
 module.exports = routes;
