@@ -12,18 +12,21 @@ class LikeController {
       return res.status(400).json({ error: "Post not found" });
     }
 
-    const postLike = await Post.update(
-      { likes: verifyPost.likes + 1 },
-      {
-        where: { id: postId },
+    if (verifyPost.likes < 1) {
+      const postLike = await Post.update(
+        { likes: verifyPost.likes + 1 },
+        {
+          where: { id: postId },
+        }
+      );
+
+      if (!postLike) {
+        return res.status(400).json({ error: "Error to add like" });
       }
-    );
 
-    if (!postLike) {
-      return res.status(400).json({ error: "Error to add like" });
+      return res.json({ message: "Success, post liked" });
     }
-
-    return res.json({ message: "Success, post unliked" });
+    return res.status(401).json({ message: "Post is liked for you" });
   }
   async removeLike(req, res) {
     const postId = req.params.id;
