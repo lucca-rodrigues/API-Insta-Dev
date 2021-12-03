@@ -20,11 +20,7 @@ class Like extends Model {
   }
 
   // static associate(models) {
-  //   // this.belongsTo(models.Post, { foreignKey: "post_id", as: "posts" });
-  //   // this.hasMany(models.User, {
-  //   //   foreignKey: "id",
-  //   //   as: "users",
-  //   // });
+  //   this.belongsTo(models.Post, { foreignKey: "post_id", as: "posts" });
   // }
 }
 

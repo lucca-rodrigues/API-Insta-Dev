@@ -3,19 +3,22 @@ const Post = require("../Models/Post");
 
 class PostController {
   async create(req, res) {
-    const post = await Post.create({
-      author_id: req.user_id,
-      ...req.body,
-    })
-      .then((post) => {
-        return res.status(200).json(post);
-      })
-      .catch((err) => {
-        return res.status(400).json({ error: err });
-      });
+    const userId = req.user_id;
 
-    if (!post) {
-      return res.status(400).json({ error: "Post not created" });
+    console.log(userId);
+
+    try {
+      const post = await Post.create({
+        author_id: 1,
+        author: req.params.name,
+        ...req.body,
+      });
+      if (!post) {
+        return res.status(400).json({ error: "Post not created" });
+      }
+      return res.status(200).json(post);
+    } catch (err) {
+      return res.status(400).json({ err: err });
     }
   }
 
@@ -40,21 +43,25 @@ class PostController {
   }
 
   async getPostsByUser(req, res) {
-    const posts = await Post.findAll({
-      order: [["created_at", "DESC"]],
+    try {
+      const posts = await Post.findAll({
+        order: [["created_at", "DESC"]],
 
-      where: { author_id: req.user_id },
-    });
+        where: { author_id: req.user_id },
+      });
 
-    if (!posts) {
-      return res.status(400).json({ error: "Post not found" });
+      if (!posts) {
+        return res.status(400).json({ error: "Post not found" });
+      }
+
+      const postList = [];
+      for (const item of posts) {
+        postList.push(item);
+      }
+      return res.status(200).json(postList);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
     }
-
-    const postList = [];
-    for (const item of posts) {
-      postList.push(item);
-    }
-    return res.status(200).json(postList);
   }
 
   async update() {}

@@ -5,17 +5,12 @@ class LikeController {
   async addLike(req, res) {
     const { post_id, liked, users_liked, likes } = req.body;
 
-    const like = await Like.findAll().then(() => {
-      return res
-        .status(200)
-        .json(like)
-        .catch((err) => {
-          return res.status(400).json({
-            message: "Error",
-            error: err,
-          });
-        });
-    });
+    try {
+      const like = await Like.findAll();
+      return res.status(200).json({ like });
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
 
     // const like = await Like.create({
     //   post_id,

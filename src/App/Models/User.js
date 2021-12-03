@@ -29,13 +29,6 @@ class User extends Model {
   checkPassword(password) {
     return bcryptjs.compare(password, this.password_hash);
   }
-
-  static associate(models) {
-    this.hasOne(models.UserDetails, {
-      foreignKey: "user_id",
-      as: "user_details",
-    });
-  }
 }
 
 module.exports = User;
