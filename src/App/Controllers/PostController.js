@@ -89,7 +89,31 @@ class PostController {
     }
   }
 
-  async update() {}
+  async update(req, res) {
+    const userId = req.user_id;
+    const postId = req.params.id;
+
+    const post = await Post.findOne({
+      where: {
+        id: postId,
+      },
+    });
+
+    if (!post) {
+      return res.status(400).json({ error: "Post not found" });
+    }
+
+    if (post.author_id === userId) {
+      try {
+        const updatedPost = await post.update(req.body);
+        return res.status(200).json(updatedPost);
+      } catch (err) {
+        return res.status(400).json({ err: err.message });
+      }
+    }
+
+    return res.status(401).json({ error: "You are not authorized" });
+  }
 
   async delete(req, res) {
     const userId = req.user_id;

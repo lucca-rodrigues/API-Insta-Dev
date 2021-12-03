@@ -35,7 +35,7 @@ routes.delete("/users/bio/:id", UserDetailsController.delete);
 
 routes.post("/posts/new", PostController.create);
 routes.get("/posts/user", PostController.getPostsByUser);
-routes.put("/posts/user", PostController.getPostsByUser);
+routes.put("/posts/user/:id", PostController.update);
 routes.delete("/posts/user/:id", PostController.delete);
 
 routes.post("/posts/liked/:id", LikeController.addLike);
