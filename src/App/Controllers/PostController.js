@@ -29,7 +29,7 @@ class PostController {
         }
       );
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return res.status(400).json({ error: err.message });
     }
   }
 
@@ -49,15 +49,15 @@ class PostController {
         include: [
           {
             model: Like,
-            // as: "likes",
-            // required: true,
-            // attributes: ["post_id", "users_liked", "likes"],
+            as: "likes",
+            required: true,
+            attributes: ["post_id", "users_liked", "likes"],
           },
         ],
       });
       return res.status(200).json(posts);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return res.status(400).json({ error: err.message });
     }
 
     // if (!posts) {
@@ -85,7 +85,7 @@ class PostController {
       }
       return res.status(200).json(postList);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return res.status(400).json({ error: err.message });
     }
   }
 
@@ -108,7 +108,7 @@ class PostController {
         const updatedPost = await post.update(req.body);
         return res.status(200).json(updatedPost);
       } catch (err) {
-        return res.status(400).json({ err: err.message });
+        return res.status(400).json({ error: err.message });
       }
     }
 
@@ -139,7 +139,7 @@ class PostController {
         }
         return res.status(200).json({ message: "Post deleted" });
       } catch (err) {
-        return res.status(400).json({ err: err.message });
+        return res.status(400).json({ error: err.message });
       }
     }
 
