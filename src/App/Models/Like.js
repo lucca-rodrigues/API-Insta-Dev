@@ -20,15 +20,8 @@ class Like extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: "id", as: "user" });
-    // this.belongsTo(models.UserDetails, {
-    //   constraint: true,
-    //   foreignKey: "id",
-    //   as: "user_details",
-    // });
-
     this.belongsTo(models.UserDetails, {
-      constraints: true,
+      constraint: true,
       foreignKey: "id",
       as: "user_details",
     });

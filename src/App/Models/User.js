@@ -33,7 +33,7 @@ class User extends Model {
   static associate(models) {
     this.belongsTo(models.UserDetails, {
       foreignKey: "id",
-      as: "user_details",
+      as: "biography",
       onDelete: "CASCADE",
     });
   }

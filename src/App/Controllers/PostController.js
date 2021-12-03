@@ -49,21 +49,16 @@ class PostController {
         include: [
           {
             model: Like,
-            as: "likes",
-            required: true,
-            attributes: ["post_id", "users_liked", "likes"],
+            as: "user_details",
+            // required: true,
+            // attributes: ["post_id", "users_liked", "likes"],
           },
         ],
       });
       return res.status(200).json(posts);
-    } catch (err) {
-      return res.status(400).json({ error: err.message });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-
-    // if (!posts) {
-    //   return res.status(400).json({ error: "Post not found" });
-    // }
-    // return res.status(200).json(posts);
   }
 
   async getPostsByUser(req, res) {

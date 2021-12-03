@@ -3,18 +3,22 @@ const UserDetails = require("../Models/UserDetails");
 
 class UserController {
   async create(req, res) {
-    const verifyUser = await User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    });
+    try {
+      const verifyUser = await User.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
 
-    if (!verifyUser) {
-      const user = await User.create(req.body);
+      if (!verifyUser) {
+        const user = await User.create(req.body);
 
-      return res.json(user);
+        return res.json(user);
+      }
+      return res.status(400).json({ error: "User already exists" });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-    return res.status(400).json({ error: "User already exists" });
   }
 
   async getAllUsers(req, res) {
@@ -37,11 +41,11 @@ class UserController {
         where: {
           id: req.user_id,
         },
-        attributes: ["id", "name", "email", "createdAt"],
+        attributes: ["id", "name", "email"],
         include: [
           {
             model: UserDetails,
-            as: "user_details",
+            as: "biography",
             // required: true,
             attributes: ["username", "avatar", "bio", "gender"],
           },
@@ -59,9 +63,11 @@ class UserController {
   }
 
   async delete(req, res) {
+    const userId = req.user_id;
+    const id = req.params.id;
     const user = await User.findOne({
       where: {
-        id: req.params.id,
+        id: id,
       },
     });
 
@@ -69,13 +75,22 @@ class UserController {
       return res.status(400).json({ error: "User not found" });
     }
 
-    await User.destroy({
-      where: {
-        id: req.user_id,
-      },
-    });
+    try {
+      if (id === userId) {
+        await User.destroy({
+          where: {
+            id: req.user_id,
+          },
+        });
 
-    return res.status(200).json({ message: "User deleted!" });
+        return res.status(200).json({ message: "User deleted!" });
+      }
+      return res
+        .status(401)
+        .json({ error: "this user is diferent to logged user" });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
   }
 }
 

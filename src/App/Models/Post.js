@@ -20,6 +20,11 @@ class UserDetails extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: "author_id", as: "user" });
+    this.belongsTo(models.UserDetails, {
+      constraint: true,
+      foreignKey: "id",
+      as: "user_details",
+    });
   }
 }
 
