@@ -38,8 +38,8 @@ class LikeController {
       return res.json({
         message: "Success, post liked",
       });
-    } catch (err) {
-      return res.status(400).json({ error: err.message });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
   }
   async removeLike(req, res) {
@@ -58,8 +58,6 @@ class LikeController {
     const thisUserAlreadyLike = likes.users_liked.includes(userLiked);
     const removeUserLiked = listUsersLiked.filter((user) => user !== userLiked);
 
-    console.log("listUsersLiked", listUsersLiked);
-
     if (!post) {
       return res.status(400).json({ error: "Post not found" });
     }
@@ -77,8 +75,8 @@ class LikeController {
         return res.json({
           message: "Success, post unliked",
         });
-      } catch (err) {
-        return res.status(400).json({ error: err.message });
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
       }
     }
     return res.status(401).json({ error: "You didn't like this post" });

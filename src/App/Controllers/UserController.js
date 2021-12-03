@@ -22,16 +22,20 @@ class UserController {
   }
 
   async getAllUsers(req, res) {
-    const users = await User.findAll({
-      order: [["created_at", "DESC"]],
-      attributes: ["id", "name", "email", "created_at", "updated_at"],
-    });
+    try {
+      const users = await User.findAll({
+        order: [["created_at", "DESC"]],
+        attributes: ["id", "name", "email", "created_at", "updated_at"],
+      });
 
-    if (!users) {
-      return res.status(400).json({ error: "No users found" });
+      if (!users) {
+        return res.status(400).json({ error: "No users found" });
+      }
+
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-
-    return res.status(200).json(users);
   }
 
   async getUser(req, res) {
