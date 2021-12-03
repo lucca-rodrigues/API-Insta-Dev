@@ -91,7 +91,36 @@ class PostController {
 
   async update() {}
 
-  async delete() {}
+  async delete(req, res) {
+    const userId = req.user_id;
+    const post = await Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!post) {
+      return res.status(400).json({ error: "Post not found" });
+    }
+
+    if (post.author_id === userId) {
+      try {
+        const post = await Post.destroy({
+          where: {
+            id: req.params.id,
+            author_id: userId,
+          },
+        });
+        if (!post) {
+          return res.status(400).json({ error: "Post not found" });
+        }
+        return res.status(200).json({ message: "Post deleted" });
+      } catch (err) {
+        return res.status(400).json({ err: err.message });
+      }
+    }
+
+    return res.status(401).json({ error: "You are not authorized" });
+  }
 }
 
 module.exports = new PostController();
