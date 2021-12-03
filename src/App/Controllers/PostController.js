@@ -1,5 +1,6 @@
 const User = require("../Models/User");
 const Post = require("../Models/Post");
+const Like = require("../Models/Like");
 
 class PostController {
   async create(req, res) {
@@ -13,12 +14,22 @@ class PostController {
         author: req.params.name,
         ...req.body,
       });
+
+      const like = await Like.create({
+        post_id: post.id,
+      });
+
       if (!post) {
         return res.status(400).json({ error: "Post not created" });
       }
-      return res.status(200).json(post);
+      return (
+        res.status(200).json(post),
+        {
+          like,
+        }
+      );
     } catch (err) {
-      return res.status(400).json({ err: err });
+      return res.status(400).json({ err: err.message });
     }
   }
 

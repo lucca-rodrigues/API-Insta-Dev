@@ -23,9 +23,6 @@ class LikeController {
       return res.status(400).json({ error: "Post not found" });
     }
 
-    // if (post?.liked === true) {
-    //   return res.status(401).json({ error: "This post already liked" });
-    // }
     if (thisUserAlreadyLike) {
       return res.status(401).json({ error: "You already liked this post" });
     }
