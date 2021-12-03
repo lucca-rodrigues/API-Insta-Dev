@@ -6,6 +6,7 @@ const authMiddleware = require("./App/Middlewares/auth");
 
 const userSchema = require("./Schemas/CreateUserSchema");
 const authSchema = require("./Schemas/AuthSchema");
+const postSchema = require("./Schemas/CreatePostSchema");
 
 const UserController = require("./App/Controllers/UserController");
 const UserDetailsController = require("./App/Controllers/UserDetailsController");
@@ -33,7 +34,7 @@ routes.post("/users/bio", UserDetailsController.create);
 routes.put("/users/bio", UserDetailsController.update);
 routes.delete("/users/bio/:id", UserDetailsController.delete);
 
-routes.post("/posts/new", PostController.create);
+routes.post("/posts/new", schemaValidator(postSchema), PostController.create);
 routes.get("/posts/user", PostController.getPostsByUser);
 routes.put("/posts/user/:id", PostController.update);
 routes.delete("/posts/user/:id", PostController.delete);

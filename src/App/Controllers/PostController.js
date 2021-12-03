@@ -42,7 +42,7 @@ class PostController {
           {
             model: User,
             as: "user",
-            attributes: ["name"],
+            attributes: ["name", "image"],
           },
         ],
         // include: [
@@ -56,7 +56,7 @@ class PostController {
       });
       return res.status(200).json(posts);
     } catch (error) {
-      return res.status(400).json({ error: error });
+      return res.status(400).json({ error: error.message });
     }
   }
 
