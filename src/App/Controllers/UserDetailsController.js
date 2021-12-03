@@ -3,34 +3,43 @@ const UserDetails = require("../Models/UserDetails");
 
 class UserDetailsController {
   async create(req, res) {
-    const { username, avatar, bio, gender } = req.body;
-
-    const detailDetails = await UserDetails.create({
-      user_id: req.user_id,
-      username,
-      avatar,
-      bio,
-      gender,
-    });
-
-    if (!detailDetails) {
-      return res.status(400).json({ message: "Create user details failed!" });
-    }
-
-    return res.status(200).json(detailDetails);
-  }
-
-  async getUserBioDetails(req, res) {
-    const user = await UserDetails.findOne({
+    const bio = await UserDetails.findOne({
       where: {
         user_id: req.user_id,
       },
     });
 
-    if (!user) {
-      return res.status(400).json({ error: "User not found" });
+    if (!bio) {
+      const detailDetails = await UserDetails.create({
+        user_id: req.user_id,
+        ...req.boy,
+      });
+
+      if (!detailDetails) {
+        return res.status(400).json({ message: "Create user details failed!" });
+      }
+
+      return res.status(200).json(detailDetails);
     }
-    return res.status(200).json(user);
+    return res.status(401).json({ error: "User bio already exists" });
+  }
+
+  async getUserBioDetails(req, res) {
+    try {
+      const user = await UserDetails.findOne({
+        where: {
+          user_id: req.user_id,
+        },
+        attributes: ["user_id", "username", "avatar", "bio", "gender"],
+      });
+
+      if (!user) {
+        return res.status(400).json({ error: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
   }
 
   async update(req, res) {
