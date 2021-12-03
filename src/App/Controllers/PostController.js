@@ -42,22 +42,21 @@ class PostController {
           {
             model: User,
             as: "user",
-            // required: true,
             attributes: ["name"],
           },
         ],
-        include: [
-          {
-            model: Like,
-            as: "user_details",
-            // required: true,
-            // attributes: ["post_id", "users_liked", "likes"],
-          },
-        ],
+        // include: [
+        //   {
+        //     model: Like,
+        //     as: "user_details",
+        //     required: true,
+        //     attributes: ["post_id", "users_liked", "likes"],
+        //   },
+        // ],
       });
       return res.status(200).json(posts);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: error });
     }
   }
 
