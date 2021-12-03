@@ -42,13 +42,13 @@ class PostController {
           {
             model: User,
             as: "user",
-            attributes: ["name", "image"],
+            attributes: ["name"],
           },
         ],
         include: [
           {
             model: Like,
-            as: "user_details",
+            as: "likes",
             required: true,
             attributes: ["post_id", "users_liked", "likes"],
           },
