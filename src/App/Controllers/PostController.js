@@ -34,23 +34,36 @@ class PostController {
   }
 
   async getPosts(req, res) {
-    const posts = await Post.findAll({
-      order: [["created_at", "DESC"]],
-      attributes: ["id", "author_id", "description", "image", "created_at"],
-      include: [
-        {
-          model: User,
-          as: "user",
-          // required: true,
-          attributes: ["name"],
-        },
-      ],
-    });
-
-    if (!posts) {
-      return res.status(400).json({ error: "Post not found" });
+    try {
+      const posts = await Post.findAll({
+        order: [["created_at", "DESC"]],
+        attributes: ["id", "author_id", "description", "image", "created_at"],
+        include: [
+          {
+            model: User,
+            as: "user",
+            // required: true,
+            attributes: ["name"],
+          },
+        ],
+        include: [
+          {
+            model: Like,
+            as: "post_likes",
+            // required: true,
+            attributes: ["post_id", "users_liked", "likes"],
+          },
+        ],
+      });
+      return res.status(200).json(posts);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
     }
-    return res.status(200).json(posts);
+
+    // if (!posts) {
+    //   return res.status(400).json({ error: "Post not found" });
+    // }
+    // return res.status(200).json(posts);
   }
 
   async getPostsByUser(req, res) {

@@ -32,26 +32,30 @@ class UserController {
 
   async getUser(req, res) {
     console.log("req.user_id", req.user_id);
-    const user = await User.findAll({
-      where: {
-        id: req.user_id,
-      },
-      attributes: ["id", "name", "email", "createdAt"],
-      include: [
-        {
-          model: UserDetails,
-          as: "user_details",
-          // required: true,
-          attributes: ["username", "avatar", "bio", "gender"],
+    try {
+      const user = await User.findAll({
+        where: {
+          id: req.user_id,
         },
-      ],
-    });
+        attributes: ["id", "name", "email", "createdAt"],
+        include: [
+          {
+            model: UserDetails,
+            as: "user_details",
+            // required: true,
+            attributes: ["username", "avatar", "bio", "gender"],
+          },
+        ],
+      });
 
-    if (!user) {
-      return res.status(400).json({ error: "User not found" });
+      if (!user) {
+        return res.status(400).json({ error: "User not found" });
+      }
+
+      return res.status(200).json(user);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
     }
-
-    return res.status(200).json(user);
   }
 
   async delete(req, res) {

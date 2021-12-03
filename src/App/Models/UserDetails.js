@@ -21,7 +21,7 @@ class UserDetails extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: "id", as: "user" });
+    this.belongsTo(models.Like, { foreignKey: "user_id", as: "user" });
   }
 }
 
