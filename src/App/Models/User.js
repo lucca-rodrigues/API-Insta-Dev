@@ -31,11 +31,7 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.UserDetails, {
-      foreignKey: "id",
-      as: "biography",
-      onDelete: "CASCADE",
-    });
+    this.belongsTo(models.UserDetails, { foreignKey: "id", as: "biography" });
   }
 }
 

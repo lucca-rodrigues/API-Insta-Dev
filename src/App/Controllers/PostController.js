@@ -50,7 +50,7 @@ class PostController {
             model: Like,
             as: "likes",
             required: true,
-            attributes: ["post_id", "users_liked", "likes"],
+            attributes: ["users_liked", "likes"],
           },
         ],
       });

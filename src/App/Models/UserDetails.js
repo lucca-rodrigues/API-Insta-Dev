@@ -19,13 +19,13 @@ class UserDetails extends Model {
 
     return this;
   }
-  static associate(models) {
-    this.belongsTo(models.Like, {
-      constraint: true,
-      foreignKey: "id",
-      as: "user_details",
-    });
-  }
+  // static associate(models) {
+  //   this.belongsTo(models.Like, {
+  //     constraint: true,
+  //     foreignKey: "id",
+  //     as: "user_details",
+  //   });
+  // }
 }
 
 module.exports = UserDetails;
