@@ -3,23 +3,36 @@ const Post = require("../Models/Post");
 
 class LikeController {
   async addLike(req, res) {
-    const like = await Like.create({
-      post_id: 1,
-      liked: true,
-      users_liked: [1],
-      likes: 0,
-    })
-      .then(() => {
-        return res.status(200).json(like);
-      })
-      .catch((err) => {
-        return res.status(400).json(err);
-      });
+    const { post_id, liked, users_liked, likes } = req.body;
+
+    const like = await Like.findAll().then(() => {
+      return res
+        .status(200)
+        .json(like)
+        .catch((err) => {
+          return res.status(400).json({
+            message: "Error",
+            error: err,
+          });
+        });
+    });
+
+    // const like = await Like.create({
+    //   post_id,
+    //   liked,
+    //   users_liked,
+    //   likes,
+    // });
 
     // if (!like) {
-    //   return res.status(400).json({ message: "Add like is failed!" });
+    //   return res.status(400).json(like);
     // }
-    // return res.status(200).json(like);
+
+    // return res
+    //   .status(200)
+    //   .json({ data: { post_id, liked, users_liked, likes } });
+
+    // return res.json({ message: "Success, like added" });
   }
   async removeLike(req, res) {
     const postId = req.params.id;

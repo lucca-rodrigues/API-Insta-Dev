@@ -19,13 +19,13 @@ class Like extends Model {
     return this;
   }
 
-  static associate(models) {
-    // this.belongsTo(models.Post, { foreignKey: "post_id", as: "posts" });
-    // this.hasMany(models.User, {
-    //   foreignKey: "id",
-    //   as: "users",
-    // });
-  }
+  // static associate(models) {
+  //   // this.belongsTo(models.Post, { foreignKey: "post_id", as: "posts" });
+  //   // this.hasMany(models.User, {
+  //   //   foreignKey: "id",
+  //   //   as: "users",
+  //   // });
+  // }
 }
 
 module.exports = Like;

@@ -23,6 +23,10 @@ class UserController {
       attributes: ["id", "name", "email", "created_at", "updated_at"],
     });
 
+    if (!users) {
+      return res.status(400).json({ error: "No users found" });
+    }
+
     return res.status(200).json(users);
   }
 

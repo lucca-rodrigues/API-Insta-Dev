@@ -16,10 +16,11 @@ module.exports = {
       liked: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
       },
       users_liked: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),
-        allowNull: false,
+        defaultValue: [],
       },
       likes: {
         type: Sequelize.INTEGER,
