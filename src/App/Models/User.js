@@ -34,6 +34,7 @@ class User extends Model {
     this.belongsTo(models.UserDetails, {
       foreignKey: "id",
       as: "user_details",
+      onDelete: "CASCADE",
     });
   }
 }

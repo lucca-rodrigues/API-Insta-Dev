@@ -8,7 +8,7 @@ class Like extends Model {
         post_id: Sequelize.INTEGER,
         liked: Sequelize.BOOLEAN,
         users_liked: Sequelize.ARRAY(Sequelize.INTEGER),
-        likes: Sequelize.STRING,
+        likes: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -17,6 +17,21 @@ class Like extends Model {
     );
 
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: "id", as: "user" });
+    // this.belongsTo(models.UserDetails, {
+    //   constraint: true,
+    //   foreignKey: "id",
+    //   as: "user_details",
+    // });
+
+    this.belongsTo(models.UserDetails, {
+      constraints: true,
+      foreignKey: "id",
+      as: "user_details",
+    });
   }
 }
 

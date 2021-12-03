@@ -17,8 +17,6 @@ class LikeController {
     const listUsersLiked = likes.users_liked;
     const thisUserAlreadyLike = likes.users_liked.includes(userLiked);
 
-    console.log("listUsersLiked", listUsersLiked);
-
     if (!post) {
       return res.status(400).json({ error: "Post not found" });
     }
@@ -28,7 +26,7 @@ class LikeController {
     }
 
     try {
-      const addLikeOnPost = await Like.update(
+      await Like.update(
         {
           users_liked: [...listUsersLiked, userLiked],
           liked: true,
@@ -39,7 +37,6 @@ class LikeController {
 
       return res.json({
         message: "Success, post liked",
-        status: addLikeOnPost,
       });
     } catch (err) {
       return res.status(400).json({ error: err.message });
@@ -69,7 +66,7 @@ class LikeController {
 
     if (thisUserAlreadyLike) {
       try {
-        const addLikeOnPost = await Like.update(
+        await Like.update(
           {
             users_liked: removeUserLiked,
             likes: likes.likes - 1,
@@ -79,7 +76,6 @@ class LikeController {
 
         return res.json({
           message: "Success, post unliked",
-          status: addLikeOnPost,
         });
       } catch (err) {
         return res.status(400).json({ error: err.message });

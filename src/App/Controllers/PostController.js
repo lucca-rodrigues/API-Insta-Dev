@@ -10,7 +10,7 @@ class PostController {
 
     try {
       const post = await Post.create({
-        author_id: 1,
+        author_id: req.user_id,
         author: req.params.name,
         ...req.body,
       });
@@ -33,7 +33,7 @@ class PostController {
     }
   }
 
-  async getPosts(req, res) {
+  async getAllPosts(req, res) {
     try {
       const posts = await Post.findAll({
         order: [["created_at", "DESC"]],
@@ -49,9 +49,9 @@ class PostController {
         include: [
           {
             model: Like,
-            as: "post_likes",
+            // as: "likes",
             // required: true,
-            attributes: ["post_id", "users_liked", "likes"],
+            // attributes: ["post_id", "users_liked", "likes"],
           },
         ],
       });
@@ -69,9 +69,10 @@ class PostController {
   async getPostsByUser(req, res) {
     try {
       const posts = await Post.findAll({
+        where: {
+          author_id: req.user_id,
+        },
         order: [["created_at", "DESC"]],
-
-        where: { author_id: req.user_id },
       });
 
       if (!posts) {

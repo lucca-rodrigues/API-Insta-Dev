@@ -21,7 +21,7 @@ routes.get("/", (req, res) => {
 // Create user
 routes.post("/auth", schemaValidator(authSchema), AuthController.authenticate);
 routes.post("/users/new", schemaValidator(userSchema), UserController.create);
-routes.get("/posts", PostController.getPosts);
+routes.get("/posts", PostController.getAllPosts);
 
 routes.use(authMiddleware);
 routes.get("/users", UserController.getAllUsers);
