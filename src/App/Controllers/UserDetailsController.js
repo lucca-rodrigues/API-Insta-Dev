@@ -20,7 +20,7 @@ class UserDetailsController {
     return res.status(200).json(detailDetails);
   }
 
-  async getDetails(req, res) {
+  async getUserBioDetails(req, res) {
     const user = await UserDetails.findOne({
       where: {
         user_id: req.user_id,

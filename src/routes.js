@@ -28,7 +28,7 @@ routes.get("/users", UserController.getAllUsers);
 routes.get("/users/properties", UserController.getUser);
 routes.delete("/users/:id", UserController.delete);
 
-routes.get("/users/bio", UserDetailsController.getDetails);
+routes.get("/users/bio", UserDetailsController.getUserBioDetails);
 routes.post("/users/bio", UserDetailsController.create);
 routes.put("/users/bio", UserDetailsController.update);
 routes.delete("/users/bio/:id", UserDetailsController.delete);
