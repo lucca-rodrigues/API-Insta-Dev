@@ -26,7 +26,7 @@ routes.get("/posts", PostController.getAllPosts);
 
 routes.use(authMiddleware);
 routes.get("/users", UserController.getAllUsers);
-routes.get("/users/properties", UserController.getUser);
+routes.get("/users/properties", UserController.getUserDetails);
 routes.delete("/users/:id", UserController.delete);
 
 routes.get("/users/bio", UserDetailsController.getUserBioDetails);

@@ -3,34 +3,51 @@ const UserDetails = require("../Models/UserDetails");
 
 class UserDetailsController {
   async create(req, res) {
-    const bio = await UserDetails.findOne({
+    // const { username, avatar, bio, gender } = req.body;
+    const userId = req.user_id;
+
+    const userBioExists = await UserDetails.findOne({
       where: {
-        user_id: req.user_id,
+        user_id: userId,
       },
     });
 
-    if (!bio) {
-      const detailDetails = await UserDetails.create({
-        user_id: req.user_id,
-        ...req.boy,
-      });
+    if (userBioExists) {
+      return res.status(401).json({ error: "User bio already exists" });
+    }
+
+    const data = {
+      user_id: userId,
+      ...req.body,
+    };
+
+    try {
+      const detailDetails = await UserDetails.create(data);
 
       if (!detailDetails) {
         return res.status(400).json({ message: "Create user details failed!" });
       }
 
-      return res.status(200).json(detailDetails);
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-    return res.status(401).json({ error: "User bio already exists" });
   }
-
   async getUserBioDetails(req, res) {
     try {
       const user = await UserDetails.findOne({
         where: {
           user_id: req.user_id,
         },
-        attributes: ["user_id", "username", "avatar", "bio", "gender"],
+        attributes: [
+          "id",
+          "user_id",
+          "username",
+          "avatar",
+          "bio",
+          "gender",
+          "created_at",
+        ],
       });
 
       if (!user) {
@@ -58,24 +75,32 @@ class UserDetailsController {
 
   async delete(req, res) {
     const userId = req.user_id;
-    const bioId = req.params.id;
+    const id = req.params.id;
 
-    const user = await UserDetails.findOne({
+    const bio = await UserDetails.findOne({
       where: {
         user_id: userId,
       },
     });
 
-    if (!user) {
-      return res.status(400).json({ error: "User Bio not found" });
+    if (!bio) {
+      return res.status(400).json({ error: "User bio not found" });
     }
 
-    await UserDetails.destroy({
-      where: {
-        id: bioId,
-      },
-    });
-    return res.status(200).json({ message: "User Bio deleted!" });
+    try {
+      const bioToDeleted = await UserDetails.destroy({
+        where: {
+          id: id,
+        },
+      });
+
+      if (!bioToDeleted) {
+        return res.status(400).json({ error: "Id bio not found" });
+      }
+      return res.status(200).json({ message: "User bio deleted!" });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
   }
 }
 

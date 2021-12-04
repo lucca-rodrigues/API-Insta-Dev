@@ -38,7 +38,7 @@ class UserController {
     }
   }
 
-  async getUser(req, res) {
+  async getUserDetails(req, res) {
     console.log("req.user_id", req.user_id);
     try {
       const user = await User.findAll({
@@ -50,7 +50,7 @@ class UserController {
           {
             model: UserDetails,
             as: "biography",
-            // required: true,
+            required: true,
             attributes: ["username", "avatar", "bio", "gender"],
           },
         ],
