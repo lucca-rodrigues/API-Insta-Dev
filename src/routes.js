@@ -31,7 +31,7 @@ routes.delete("/users/:id", UserController.delete);
 
 routes.get("/users/bio", UserDetailsController.getUserBioDetails);
 routes.post("/users/bio", UserDetailsController.create);
-routes.put("/users/bio", UserDetailsController.update);
+routes.put("/users/bio/:id", UserDetailsController.update);
 routes.delete("/users/bio/:id", UserDetailsController.delete);
 
 routes.post("/posts/new", schemaValidator(postSchema), PostController.create);

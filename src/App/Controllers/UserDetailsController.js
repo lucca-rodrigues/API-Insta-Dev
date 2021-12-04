@@ -60,17 +60,27 @@ class UserDetailsController {
   }
 
   async update(req, res) {
-    const { username, avatar, bio, gender } = req.body;
-    const userBio = await UserDetails.update(
-      { username, avatar, bio, gender },
-      { where: { user_id: req.user_id } }
-    );
+    const userId = req.user_id;
+
+    const userBio = await UserDetails.findOne({
+      where: {
+        user_id: userId,
+      },
+    });
 
     if (!userBio) {
-      return res.status(400).json({ message: "Error to update bio" });
+      return res.status(400).json({ error: "User Bio not found" });
     }
 
-    return res.status(200).json({ bio: { username, avatar, bio, gender } });
+    if (userBio.user_id === userId) {
+      try {
+        const updatedBio = await userBio.update(req.body);
+        return res.status(200).json(updatedBio);
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
+      }
+    }
+    return res.status(400).json({ message: "You are not authorized" });
   }
 
   async delete(req, res) {
