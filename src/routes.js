@@ -7,6 +7,7 @@ const authMiddleware = require("./App/Middlewares/auth");
 const userSchema = require("./Schemas/CreateUserSchema");
 const authSchema = require("./Schemas/AuthSchema");
 const postSchema = require("./Schemas/CreatePostSchema");
+const commentSchema = require("./Schemas/CreateCommentSchema");
 
 const UserController = require("./App/Controllers/UserController");
 const UserDetailsController = require("./App/Controllers/UserDetailsController");
@@ -44,7 +45,11 @@ routes.post("/posts/liked/:id", LikeController.addLike);
 routes.put("/posts/unlike/:id", LikeController.removeLike);
 
 routes.get("/comments", CommentController.getAllComments);
-routes.post("/comments/new/:id", CommentController.create);
+routes.post(
+  "/comments/new/:id",
+  schemaValidator(commentSchema),
+  CommentController.create
+);
 
 routes.post("/upload", upload.single("image"), FileController.upload);
 
