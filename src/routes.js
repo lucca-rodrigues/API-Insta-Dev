@@ -45,6 +45,7 @@ routes.post("/posts/liked/:id", LikeController.addLike);
 routes.put("/posts/unlike/:id", LikeController.removeLike);
 
 routes.get("/comments", CommentController.getAllComments);
+routes.get("/comments/posts/:id", CommentController.getCommentsById);
 routes.post(
   "/comments/new/:id",
   schemaValidator(commentSchema),

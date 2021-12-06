@@ -35,6 +35,23 @@ class CommentController {
     }
   }
 
+  async getCommentsById(req, res) {
+    try {
+      const comments = await Comment.findAll({
+        where: {
+          post_id: req.params.id,
+        },
+      });
+
+      if (!comments) {
+        return res.status(400).json({ error: "Comments not found" });
+      }
+      return res.status(200).json(comments);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+
   async update(req, res) {
     const userId = req.user_id;
     const commentId = req.params.id;
