@@ -86,19 +86,7 @@ class CommentController {
   }
 
   async delete(req, res) {
-    const userId = req.user_id;
     const commentId = req.params.id;
-
-    const comment = await Comment.findAll({
-      where: {
-        id: commentId,
-        user_id: userId,
-      },
-    });
-
-    if (!comment) {
-      return res.status(400).json({ error: "Comment not found" });
-    }
 
     try {
       const deletedComment = await Comment.destroy({
@@ -114,22 +102,6 @@ class CommentController {
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-
-    // try {
-    //   if (comments.user_id === userId) {
-    //     const idPostToDelete = await Comment.destroy({
-    //       where: {
-    //         id: commentId,
-    //       },
-    //     });
-    //     if (!idPostToDelete) {
-    //       return res.status(400).json({ error: "Comment not deleted" });
-    //     }
-    //     return res.status(200).json({ message: "Comment deleted" });
-    //   }
-    // } catch (error) {
-    //   return res.status(400).json({ error: error.message });
-    // }
   }
 }
 
