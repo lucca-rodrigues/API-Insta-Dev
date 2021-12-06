@@ -35,6 +35,30 @@ class CommentController {
     }
   }
 
+  async update(req, res) {
+    const userId = req.user_id;
+    const commentId = req.params.id;
+
+    const comment = await Comment.findOne({
+      where: {
+        id: commentId,
+        user_id: userId,
+      },
+    });
+
+    if (!comment) {
+      return res.status(400).json({ error: "Comment not found" });
+    }
+    try {
+      const commentUpdated = await comment.update({
+        comment: req.body.comment,
+      });
+      return res.status(200).json(commentUpdated);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+
   async delete(req, res) {
     const userId = req.user_id;
     const commentId = req.params.id;

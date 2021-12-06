@@ -50,6 +50,11 @@ routes.post(
   schemaValidator(commentSchema),
   CommentController.create
 );
+routes.put(
+  "/comments/posts/:id",
+  schemaValidator(commentSchema),
+  CommentController.update
+);
 routes.delete("/comments/posts/:id", CommentController.delete);
 
 routes.post("/upload", upload.single("image"), FileController.upload);
