@@ -1,8 +1,8 @@
 const { Router } = require("express");
-const authMiddleware = require("../App/Middlewares/auth");
+const authMiddleware = require("../../App/Middlewares/auth");
 
-const { FileController } = require("../App/Controllers");
-const { upload } = require("../Config/Multer");
+const { FileController } = require("../../App/Controllers");
+const { upload } = require("../../Config/Multer");
 
 const routes = Router();
 

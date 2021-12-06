@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const authentication = require("./authentication.routes");
-const usersRoute = require("./users.routes");
-const usersBio = require("./userDetails.routes");
-const posts = require("./posts.routes");
-const postsLike = require("./likes.routes");
-const postComments = require("./postComments.routes");
-const uploadFiles = require("./uploadFiles.routes");
+
+const authentication = require("./Authentication");
+const usersRoute = require("./Users");
+const usersBio = require("./UserDetailsBio");
+const posts = require("./Posts");
+const postsLike = require("./PostLikes");
+const postComments = require("./PostComments");
+const uploadFiles = require("./UploadFiles");
 
 const routes = Router();
 

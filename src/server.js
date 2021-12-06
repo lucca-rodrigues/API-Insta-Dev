@@ -10,8 +10,7 @@ const app = express();
 
 require("./App/Database");
 
-const routes = require("./Routes");
-// const routes = require("./routes");
+const routes = require("./Routes/routes");
 
 // app.use(cors);
 app.use(express.json());

@@ -1,9 +1,8 @@
 const { Router } = require("express");
-const authMiddleware = require("../App/Middlewares/auth");
-
-const { CommentController } = require("../App/Controllers");
-const schemaValidator = require("../App/Middlewares/schemaValidator");
-const { commentSchema } = require("../Schemas");
+const authMiddleware = require("../../App/Middlewares/auth");
+const { CommentController } = require("../../App/Controllers");
+const schemaValidator = require("../../App/Middlewares/schemaValidator");
+const { commentSchema } = require("../../Schemas");
 
 const routes = Router();
 
