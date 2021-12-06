@@ -95,8 +95,8 @@ class CommentController {
     }
 
     try {
-      if (comments.user_id == userId) {
-        const idPostToDelete = await comments.destroy({
+      if (comments.user_id === userId) {
+        const idPostToDelete = await Comment.destroy({
           where: {
             id: commentId,
           },
