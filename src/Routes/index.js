@@ -3,6 +3,9 @@ const usersRoute = require("./users.routes");
 
 const routes = Router();
 
-routes.use("/", usersRoute);
+routes.get("/", (req, res) => {
+  res.json({ message: "hello world" });
+});
+routes.use("/users", usersRoute);
 
 module.exports = routes;
