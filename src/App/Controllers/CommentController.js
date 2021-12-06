@@ -33,7 +33,7 @@ class CommentController {
     }
   }
 
-  async getCommentsById(req, res) {
+  async getCommentsByPostId(req, res) {
     try {
       const comments = await Comment.findAll({
         where: {

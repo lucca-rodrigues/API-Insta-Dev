@@ -7,18 +7,20 @@ const { commentSchema } = require("../Schemas");
 
 const routes = Router();
 
-routes.get("/", CommentController.getAllComments);
-routes.get("/posts/:id", CommentController.getCommentsById);
+routes.get("/", authMiddleware, CommentController.getAllComments);
+routes.get("/posts/:id", authMiddleware, CommentController.getCommentsByPostId);
 routes.post(
   "/new/:id",
+  authMiddleware,
   schemaValidator(commentSchema),
   CommentController.create
 );
 routes.put(
   "/posts/:id",
+  authMiddleware,
   schemaValidator(commentSchema),
   CommentController.update
 );
-routes.delete("/posts/:id", CommentController.delete);
+routes.delete("/posts/:id", authMiddleware, CommentController.delete);
 
 module.exports = routes;

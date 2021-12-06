@@ -1,5 +1,5 @@
 class FileController {
-  async upload(req, res) {
+  async create(req, res) {
     const { filename } = req.file;
     return res.status(200).json({ url: `uploads/${filename})` });
   }
