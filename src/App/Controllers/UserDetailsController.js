@@ -3,8 +3,8 @@ const UserDetails = require("../Models/UserDetails");
 
 class UserDetailsController {
   async create(req, res) {
-    // const { username, avatar, bio, gender } = req.body;
     const userId = req.user_id;
+    const { username, avatar, bio, gender } = req.body;
 
     const userBioExists = await UserDetails.findOne({
       where: {
@@ -18,7 +18,11 @@ class UserDetailsController {
 
     const data = {
       user_id: userId,
-      ...req.body,
+      username: username,
+      avatar: avatar,
+      bio: bio,
+      gender: gender,
+      // ...req.body,
     };
 
     try {

@@ -1,6 +1,4 @@
 const Comment = require("../Models/Comment");
-const Post = require("../Models/Post");
-const User = require("../Models/User");
 
 class CommentController {
   async create(req, res) {
@@ -41,6 +39,7 @@ class CommentController {
         where: {
           post_id: req.params.id,
         },
+        attributes: ["id", "comment", "user_id", "user_name", "createdAt"],
       });
 
       if (!comments) {

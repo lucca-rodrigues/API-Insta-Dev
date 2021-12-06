@@ -1,17 +1,13 @@
 const User = require("../Models/User");
 const Post = require("../Models/Post");
 const Like = require("../Models/Like");
+const Comment = require("../Models/Comment");
 
 class PostController {
   async create(req, res) {
-    const userId = req.user_id;
-
-    console.log(userId);
-
     try {
       const post = await Post.create({
         author_id: req.user_id,
-        author: req.params.name,
         ...req.body,
       });
 
@@ -42,7 +38,7 @@ class PostController {
           {
             model: User,
             as: "user",
-            attributes: ["name"],
+            // attributes: ["name"],
           },
         ],
         include: [
@@ -53,7 +49,21 @@ class PostController {
             attributes: ["users_liked", "likes"],
           },
         ],
+        // include: [
+        //   {
+        //     model: Comment,
+        //     as: "comments",
+        //     // required: true,
+        //     // attributes: ["id", "user_id", "user_name", "comment", "created_at"],
+        //     // attributes: ["comment"],
+        //   },
+        // ],
       });
+
+      const comments = await Comment.findAll();
+      if (comments) {
+      }
+
       return res.status(200).json(posts);
     } catch (error) {
       return res.status(400).json({ error: error.message });

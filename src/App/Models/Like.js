@@ -18,6 +18,14 @@ class Like extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    // this.belongsTo(models.Post, { foreignKey: "post_id", as: "posts" });
+    // this.belongsTo(models.UserDetails, {
+    //   foreignKey: "user_id",
+    //   as: "user_details",
+    // });
+  }
 }
 
 module.exports = Like;

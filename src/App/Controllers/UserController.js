@@ -50,8 +50,8 @@ class UserController {
           {
             model: UserDetails,
             as: "biography",
-            required: true,
-            attributes: ["username", "avatar", "bio", "gender"],
+            // required: true,
+            // attributes: ["username", "avatar", "bio", "gender"],
           },
         ],
       });
