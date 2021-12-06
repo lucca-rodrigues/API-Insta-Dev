@@ -62,10 +62,10 @@ class PostController {
   async getPostsByUser(req, res) {
     try {
       const posts = await Post.findAll({
+        order: [["created_at", "DESC"]],
         where: {
           author_id: req.user_id,
         },
-        order: [["created_at", "DESC"]],
         attributes: ["id", "author_id", "description", "image", "created_at"],
         include: [
           {

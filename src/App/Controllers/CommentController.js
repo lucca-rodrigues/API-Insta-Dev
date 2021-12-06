@@ -1,11 +1,10 @@
 const Comment = require("../Models/Comment");
-
 class CommentController {
   async create(req, res) {
     try {
       const comment = await Comment.create({
-        post_id: req.user_id,
-        user_id: req.params.id,
+        post_id: req.params.id,
+        user_id: req.user_id,
         user_name: req.name,
         comment: req.body.comment,
       });
@@ -22,7 +21,9 @@ class CommentController {
 
   async getAllComments(req, res) {
     try {
-      const comments = await Comment.findAll();
+      const comments = await Comment.findAll({
+        order: [["created_at", "DESC"]],
+      });
 
       if (!comments) {
         return res.status(400).json({ error: "Comments not found" });
@@ -36,6 +37,8 @@ class CommentController {
   async getCommentsByPostId(req, res) {
     try {
       const comments = await Comment.findAll({
+        order: [["created_at", "DESC"]],
+
         where: {
           post_id: req.params.id,
         },
@@ -86,29 +89,47 @@ class CommentController {
     const userId = req.user_id;
     const commentId = req.params.id;
 
-    const comments = await Comment.findAll({
-      where: { id: commentId },
+    const comment = await Comment.findAll({
+      where: {
+        id: commentId,
+        user_id: userId,
+      },
     });
 
-    if (!comments) {
-      return res.status(400).json({ error: "Your Comment not found" });
+    if (!comment) {
+      return res.status(400).json({ error: "Comment not found" });
     }
 
     try {
-      if (comments.user_id === userId) {
-        const idPostToDelete = await Comment.destroy({
-          where: {
-            id: commentId,
-          },
-        });
-        if (!idPostToDelete) {
-          return res.status(400).json({ error: "Comment not deleted" });
-        }
-        return res.status(200).json({ message: "Comment deleted" });
+      const deletedComment = await Comment.destroy({
+        where: {
+          id: commentId,
+        },
+      });
+
+      if (!deletedComment) {
+        return res.status(400).json({ error: "Comment not already exists" });
       }
+      return res.status(200).json({ message: "Comment deleted" });
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
+
+    // try {
+    //   if (comments.user_id === userId) {
+    //     const idPostToDelete = await Comment.destroy({
+    //       where: {
+    //         id: commentId,
+    //       },
+    //     });
+    //     if (!idPostToDelete) {
+    //       return res.status(400).json({ error: "Comment not deleted" });
+    //     }
+    //     return res.status(200).json({ message: "Comment deleted" });
+    //   }
+    // } catch (error) {
+    //   return res.status(400).json({ error: error.message });
+    // }
   }
 }
 
