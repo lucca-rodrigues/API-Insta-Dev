@@ -4,19 +4,24 @@ const routes = new Router();
 const schemaValidator = require("./App/Middlewares/schemaValidator");
 const authMiddleware = require("./App/Middlewares/auth");
 
-const userSchema = require("./Schemas/CreateUserSchema");
-const authSchema = require("./Schemas/AuthSchema");
-const postSchema = require("./Schemas/CreatePostSchema");
-const commentSchema = require("./Schemas/CreateCommentSchema");
+const {
+  userSchema,
+  authSchema,
+  postSchema,
+  commentSchema,
+} = require("./Schemas");
 
-const UserController = require("./App/Controllers/UserController");
-const UserDetailsController = require("./App/Controllers/UserDetailsController");
-const AuthController = require("./App/Controllers/AuthController");
+const {
+  UserController,
+  UserDetailsController,
+  AuthController,
+  FileController,
+  PostController,
+  LikeController,
+  CommentController,
+} = require("./App/Controllers");
+
 const { upload } = require("./Config/Multer");
-const FileController = require("./App/Controllers/FileController");
-const PostController = require("./App/Controllers/PostController");
-const LikeController = require("./App/Controllers/LikeController");
-const CommentController = require("./App/Controllers/CommentController");
 
 routes.get("/", (req, res) => {
   res.json({ message: "hello world" });
