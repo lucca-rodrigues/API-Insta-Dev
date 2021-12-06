@@ -42,22 +42,16 @@ class PostController {
           },
           {
             model: Like,
-            as: "likes",
-            required: true,
+            as: "likes_info",
             attributes: ["users_liked", "likes"],
           },
           {
             model: Comment,
             as: "comments",
-            // required: true,
             attributes: ["id", "user_id", "user_name", "comment", "created_at"],
           },
         ],
       });
-
-      const comments = await Comment.findAll();
-      if (comments) {
-      }
 
       return res.status(200).json(posts);
     } catch (error) {
@@ -72,6 +66,24 @@ class PostController {
           author_id: req.user_id,
         },
         order: [["created_at", "DESC"]],
+        attributes: ["id", "author_id", "description", "image", "created_at"],
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: ["name"],
+          },
+          {
+            model: Like,
+            as: "likes_info",
+            attributes: ["users_liked", "likes"],
+          },
+          {
+            model: Comment,
+            as: "comments",
+            attributes: ["id", "user_id", "user_name", "comment", "created_at"],
+          },
+        ],
       });
 
       if (!posts) {

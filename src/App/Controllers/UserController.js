@@ -44,7 +44,7 @@ class UserController {
         where: {
           id: req.user_id,
         },
-        attributes: ["id", "name", "email", "created_at"],
+        attributes: ["id", "name", "email", "password_hash", "created_at"],
         include: [
           {
             model: UserDetails,
