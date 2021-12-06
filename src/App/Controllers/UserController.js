@@ -39,7 +39,6 @@ class UserController {
   }
 
   async getUserDetails(req, res) {
-    console.log("req.user_id", req.user_id);
     try {
       const user = await User.findAll({
         where: {
@@ -50,7 +49,7 @@ class UserController {
           {
             model: UserDetails,
             as: "biography",
-            // required: true,
+            required: true,
             // attributes: ["username", "avatar", "bio", "gender"],
           },
         ],

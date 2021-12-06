@@ -38,26 +38,21 @@ class PostController {
           {
             model: User,
             as: "user",
-            // attributes: ["name"],
+            attributes: ["name"],
           },
-        ],
-        include: [
           {
             model: Like,
             as: "likes",
             required: true,
             attributes: ["users_liked", "likes"],
           },
+          {
+            model: Comment,
+            as: "comments",
+            // required: true,
+            attributes: ["id", "user_id", "user_name", "comment", "created_at"],
+          },
         ],
-        // include: [
-        //   {
-        //     model: Comment,
-        //     as: "comments",
-        //     // required: true,
-        //     // attributes: ["id", "user_id", "user_name", "comment", "created_at"],
-        //     // attributes: ["comment"],
-        //   },
-        // ],
       });
 
       const comments = await Comment.findAll();
