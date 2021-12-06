@@ -15,47 +15,42 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "password": {
-                    "type": "string",
-                    "format": "password"
-                  }
-                },
-                "required": ["name", "email", "password"]
+                "$ref": "#/definitions/Specification"
               }
             }
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Created"
           },
-          "401": {
-            "description": "User not found"
+          "500": {
+            "description": "Specification already exists"
           }
         }
       }
     },
-
+    "definitions": {
+      "Specification": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": ["Users"],
         "summary": "List all users",
         "description": "List all users",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -90,7 +85,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": ["read"]
+          }
+        ]
       }
     },
     "/users/properties": {
@@ -149,14 +149,42 @@
           }
         }
       }
+    },
+    "/specifications": {
+      "post": {
+        "tags": ["Specification"],
+        "summary": "Create a specification",
+        "description": "Create a new specification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Specification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Specification already exists"
+          }
+        }
+      }
     }
   },
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+  "definitions": {
+    "Specification": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
       }
     }
   }

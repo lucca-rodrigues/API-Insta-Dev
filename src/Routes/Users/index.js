@@ -7,7 +7,7 @@ const { userSchema } = require("../../Schemas");
 
 const routes = Router();
 
-routes.get("/", UserController.getAllUsers);
+routes.get("/", authMiddleware, UserController.getAllUsers);
 routes.get("/properties", authMiddleware, UserController.getUserDetails);
 routes.post("/new", schemaValidator(userSchema), UserController.create);
 

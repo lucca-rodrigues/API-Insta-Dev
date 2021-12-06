@@ -22,7 +22,7 @@ class AuthController {
         where: userData,
       });
 
-      if (!user) res.status(401).send({ error: "User not found" });
+      if (!user) res.status(404).send({ error: "User not found" });
 
       if (!(await user.checkPassword(password))) {
         return res.status(401).send({ error: "Password does not match!" });
