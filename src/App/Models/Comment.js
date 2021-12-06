@@ -18,10 +18,6 @@ class Comment extends Model {
 
     return this;
   }
-
-  // static associate(models) {
-  //   this.belongsTo(models.Post, { foreignKey: "id", as: "posts" });
-  // }
 }
 
 module.exports = Comment;

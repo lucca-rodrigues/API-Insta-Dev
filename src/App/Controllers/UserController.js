@@ -44,13 +44,13 @@ class UserController {
         where: {
           id: req.user_id,
         },
-        attributes: ["id", "name", "email"],
+        attributes: ["id", "name", "email", "created_at"],
         include: [
           {
             model: UserDetails,
             as: "biography",
-            required: true,
-            // attributes: ["username", "avatar", "bio", "gender"],
+            // required: true,
+            attributes: ["username", "avatar", "bio", "gender"],
           },
         ],
       });
