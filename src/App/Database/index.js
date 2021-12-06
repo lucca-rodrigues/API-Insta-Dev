@@ -4,10 +4,11 @@ const User = require("../Models/User");
 const UserDetails = require("../Models/UserDetails");
 const Post = require("../Models/Post");
 const Like = require("../Models/Like");
+const Comment = require("../Models/Comment");
 
 const databaseConfig = require("../../Config/database");
 
-const models = [User, UserDetails, Post, Like];
+const models = [User, UserDetails, Post, Like, Comment];
 
 class Database {
   constructor() {

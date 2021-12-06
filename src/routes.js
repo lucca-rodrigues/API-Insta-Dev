@@ -15,6 +15,7 @@ const { upload } = require("./Config/Multer");
 const FileController = require("./App/Controllers/FileController");
 const PostController = require("./App/Controllers/PostController");
 const LikeController = require("./App/Controllers/LikeController");
+const CommentController = require("./App/Controllers/CommentController");
 
 routes.get("/", (req, res) => {
   res.json({ message: "hello world" });
@@ -41,6 +42,9 @@ routes.delete("/posts/user/:id", PostController.delete);
 
 routes.post("/posts/liked/:id", LikeController.addLike);
 routes.put("/posts/unlike/:id", LikeController.removeLike);
+
+routes.get("/comments", CommentController.getAllComments);
+routes.post("/comments/new/:id", CommentController.create);
 
 routes.post("/upload", upload.single("image"), FileController.upload);
 

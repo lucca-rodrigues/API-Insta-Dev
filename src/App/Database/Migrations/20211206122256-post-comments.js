@@ -3,9 +3,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable("post_comments", {
-      post_id: {
+      id: {
         allowNull: false,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+      },
+      post_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
       user_id: {
