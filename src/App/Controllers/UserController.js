@@ -65,6 +65,8 @@ class UserController {
     }
   }
 
+  async updated_at(req, res) {}
+
   async delete(req, res) {
     const userId = req.user_id;
     const id = req.params.id;

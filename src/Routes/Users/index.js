@@ -10,6 +10,12 @@ const routes = Router();
 routes.get("/", authMiddleware, UserController.getAllUsers);
 routes.get("/properties", authMiddleware, UserController.getUserDetails);
 routes.post("/new", schemaValidator(userSchema), UserController.create);
+// routes.put(
+//   "/update/:id",
+//   authMiddleware,
+//   // schemaValidator(userSchema),
+//   UserController.update
+// );
 
 routes.delete("/:id", authMiddleware, UserController.delete);
 

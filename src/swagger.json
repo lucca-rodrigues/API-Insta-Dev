@@ -98,6 +98,11 @@
         "tags": ["Users"],
         "summary": "Show logged user details",
         "description": "Show datails to user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -123,20 +128,275 @@
         }
       }
     },
-    "/categories/import": {
+    "/users/new": {
       "post": {
-        "tags": ["Category"],
-        "summary": "Upload a new category",
-        "description": "Upload a new category",
+        "tags": ["Users"],
+        "summary": "Create user",
+        "description": "Create user",
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
+                  "name": {
                     "type": "string",
-                    "format": "binary"
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+
+    "/users/update": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user",
+        "description": "update Logged user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user",
+        "description": "Remove user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/bio": {
+      "get": {
+        "tags": ["Biography"],
+        "summary": "get user Biography",
+        "description": "Biography logged user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "user_id": {
+                        "name": "number"
+                      },
+                      "username": {
+                        "name": "string"
+                      },
+                      "avatar": {
+                        "name": "string"
+                      },
+                      "bio": {
+                        "name": "string"
+                      },
+                      "gender": {
+                        "name": "string"
+                      },
+                      "created_at": {
+                        "name": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/bio/new": {
+      "post": {
+        "tags": ["Biography"],
+        "summary": "Create user Biography",
+        "description": "Add Biography to logged user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "url-img.jpeg"
+                  },
+                  "bio": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": ["user_name", "avatar", "bio", "gender"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "User bio already exists"
+          }
+        }
+      }
+    },
+
+    "/users/bio/{bioId}": {
+      "put": {
+        "tags": ["Biography"],
+        "summary": "Update user",
+        "description": "update Logged user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "url-img.jpeg"
+                  },
+                  "bio": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "format": "password"
                   }
                 }
               }
@@ -144,8 +404,66 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Created"
+          },
+          "401": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/bio/{Id}": {
+      "delete": {
+        "tags": ["Biography"],
+        "summary": "Delete Biography user",
+        "description": "Remove Biography to user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "User not found"
           }
         }
       }
